@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+:root {
+    --font-body: "Inter", "Open Sans", "Noto Sans Arabic", Arial, sans-serif;
+    --font-secundary: "Comfortaa", "Noto Sans Arabic", sans-serif;
+    --border-radius: 5px;
+    --blue-6: #009cff;
+    --blue-5: #0074e0;
+    --blue-3: #054a91;
+    --blue-1: #002b50;
+    --green-1: #15c8d1;
+    --green-2: #17d7d8;
+    --green-3: #18e9da;
+    --green-4: #17f1d8;
+    --green-5: #3cf7dc;
+    --green-6: #4dffe1;
+    --green-7: #83ffe7;
+    --green-8: #a4ffee;
+    --green-9: #c5fff5;
+    /* main*/
+    --yellow-1: #ff9e00;
+    --yellow-2: #ffaf00;
+    --yellow-3: #ffc500;
+    /* main */
+    --yellow-4: #ffd100;
+    /* submain */
+    --yellow-5: #ffdc00;
+    --yellow-6: #ffe200;
+    --yellow-7: #fbe756;
+    --yellow-8: #ffed85;
+    --yellow-9: #fff4b3;
+    /*submain*/
+    --white: #ffffff;
+    /*background*/
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--blue-1);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--blue-3);
+    border-radius: 10px;
+    border: 2px solid var(--blue-1);
+    /* Efecto de separación (padding simulado) */
+    transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--blue-5);
+    /* Se oscurece o aclara al pasar el cursor */
+}
+
+/*Header*/
+header {
+    width: 100%;
+    height: 100px;
+    background-color: var(--yellow-3);
+    display: flex;
+    align-items: center;
+    padding: 0 10px 0 10px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    z-index: 5;
+}
+
+/* Header Div */
+header div {
+    display: flex;
+    height: 100px;
+    width: auto;
+}
+
+header div img {
+    max-width: 30%;
+    min-width: 170px;
+    height: 80px;
+    margin: 14px 0 auto 0;
+    object-fit: contain;
+}
+
+header div h2 {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    line-height: 1.2;
+    font: 1000 2rem / 32px var(--font-secundary);
+    color: var(--blue-1);
+    margin: auto 10px 16px 0;
+    user-select: none;
+}
+
+/* Details */
+header section {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    margin: 0 125px;
+}
+
+header section button {
+    height: 40px;
+    width: 40px;
+    background-color: var(--blue-1);
+    background-image: url(../../public/house.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 130%;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+    &:hover {
+        box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.5);
+        transition: all 0.2s ease-in-out;
+        transform: scale(1.1);
+    }
+
+    &:active {
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+        transition: all 0.2s ease-in-out;
+        transform: scale(0.9);
+    }
+}
+
+header section input {
+    height: 20px;
+    width: 300px;
+    max-width: 400px;
+    border-radius: var(--border-radius);
+    border: none;
+    padding: 0 10px 0 10px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    accent-color: var(--blue-1);
+
+    &:hover {
+        box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.5);
+        transition: all 0.2s ease-in-out;
+        transform: scale(1.006);
+    }
+}
+
+
+/* Main style */
+#main {
+    width: 100%;
+    height: calc(100vh - 100px);
+    background-color: var(--blue-6);
+    overflow-y: scroll;
+    z-index: 1;
+}
+
+#games-div {
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 10px;
+    padding: 20px;
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poki school</title>
+
+    <!--Scripts & favicon-->
+    <script type="module" src="src/App.jsx"></script>
+    <link rel="stylesheet" href="src/styles/style.css">
+    <link rel="stylesheet" href="src/App.css">
+    <link rel="icon" type="image/x-icon" href="./src/favicon.png">
+
+</head>
+
+<body>
+    <!--Menu Principal-->
+    <header>
+        <div>
+            <img src="./public/poki.svg">
+            <h2>SCHOOL</h2>
+        </div>
+        <section>
+            <button id="house-btn"></button>
+            <input type="search" id="main-input" placeholder="¡Busca aqui tus juegos!">
+        </section>
+    </header>
+    <!--Juegos-->
+    <div id="main"></div>
+    <script type="module" src="src/render.jsx"></script>
+    <script src="src/script.js"></script>
+</body>
+
+</html>
