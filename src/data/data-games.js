@@ -21,13 +21,13 @@ export const games_database = [
     name: "Subway Surfers",
     category: "Arcade",
     img: "surfers.jpg",
-    id: "",
+    id: "https://subwaysurfersonline.es/wp-content/uploads/games/html5/S/subway-surfers-san-francisco-main/index.html",
   },
   {
     name: "Geometry Dash",
     category: "Plataformas",
     img: "geometry.webp",
-    id: "",
+    id: "geometry",
   },
   {
     name: "Friday Night Funkin'",
