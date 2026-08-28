@@ -27,7 +27,7 @@ export const games_database = [
     name: "Geometry Dash",
     category: "Plataformas",
     img: "geometry.webp",
-    id: "geometry",
+    id: "geometry/public",
   },
   {
     name: "Friday Night Funkin'",
