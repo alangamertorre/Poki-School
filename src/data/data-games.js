@@ -27,7 +27,7 @@ export const games_database = [
     name: "Geometry Dash",
     category: "Plataformas",
     img: "geometry.webp",
-    id: "https://https://alangamertorre.github.io/Poki-School/geometry/",
+    id: "https://alangamertorre.github.io/Poki-School/geometry/index.html",
   },
   {
     name: "Friday Night Funkin'",
