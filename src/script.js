@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(() => {
     const btn = document.querySelectorAll(".game-card");
     btn.forEach((e) => {
-      console.log(e, e.dataset.href);
       e.addEventListener("click", () => {
         // Corrección: Es "dataset" en minúscula
         const ruta = e.dataset.href;
