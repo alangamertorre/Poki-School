@@ -94,7 +94,7 @@ html {
 .brand img {
   height: 58px;
   object-fit: contain;
-  width: 84px;
+  width: auto;
 }
 
 .brand span {
@@ -215,9 +215,10 @@ h1 {
 }
 
 .games-grid {
+  justify-content: center;
   display: grid;
   gap: 18px;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(210px, 250px));
 }
 
 .game-card {

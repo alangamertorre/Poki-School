@@ -19,7 +19,6 @@ function gameHref(path) {
 
 export default function Home() {
   useEffect(() => initializeCatalog(), []);
-
   return (
     <div className="site-shell">
       <header className="site-header">

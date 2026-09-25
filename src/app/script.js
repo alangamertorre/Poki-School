@@ -4,48 +4,60 @@ export function initializeCatalog() {
   const searchInput = document.querySelector(".search-box input");
   const gameCount = document.querySelector(".game-count");
   const emptyState = document.querySelector(".empty-state");
+
   let activeCategory = "Todos";
 
-  function updateCatalog() {
-    const query = searchInput?.value.trim().toLowerCase() ?? "";
-    let visibleCount = 0;
+  // Evento para los botones de categoría
+  categoryButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      activeCategory = button.dataset.category;
+      filterGames();
+
+      document
+        .querySelectorAll(".category-button.active")
+        .forEach((activeButton) => activeButton.classList.remove("active"));
+      button.classList.add("active");
+    });
+  });
+
+  // Evento para la barra de búsqueda (por texto)
+  if (searchInput) {
+    searchInput.addEventListener("input", () => {
+      filterGames();
+    });
+  }
+
+  // Función única de filtrado combinado
+  function filterGames() {
+    let count = 0;
+    const searchText = searchInput
+      ? searchInput.value.toLowerCase().trim()
+      : "";
 
     gameCards.forEach((card) => {
       const matchesCategory =
         activeCategory === "Todos" || card.dataset.category === activeCategory;
-      const searchableText =
-        `${card.dataset.name} ${card.dataset.category}`.toLowerCase();
-      const matchesSearch = !query || searchableText.includes(query);
-      const isVisible = matchesCategory && matchesSearch;
 
-      card.hidden = !isVisible;
-      if (isVisible) visibleCount += 1;
+      const gameTitle = (card.dataset.name || "").toLowerCase();
+      const matchesSearch = gameTitle.includes(searchText);
+
+      // Si cumple ambas condiciones, se muestra
+      if (matchesCategory && matchesSearch) {
+        card.style.display = "flex";
+        count++;
+      } else {
+        card.style.display = "none";
+      }
     });
 
-    if (gameCount) gameCount.textContent = `${visibleCount} juegos`;
-    if (emptyState) emptyState.hidden = visibleCount !== 0;
+    // Actualizar el contador de juegos
+    if (gameCount) {
+      gameCount.textContent = `${count} ${count === 1 ? "juego" : "juegos"}`;
+    }
+
+    // Mostrar/ocultar el estado vacío si no hay resultados
+    if (emptyState) {
+      emptyState.style.display = count === 0 ? "block" : "none";
+    }
   }
-
-  function handleCategoryClick(event) {
-    activeCategory = event.currentTarget.dataset.category;
-    categoryButtons.forEach((button) => {
-      const isActive = button === event.currentTarget;
-      button.classList.toggle("active", isActive);
-      button.setAttribute("aria-pressed", String(isActive));
-    });
-    updateCatalog();
-  }
-
-  categoryButtons.forEach((button) => {
-    button.addEventListener("click", handleCategoryClick);
-  });
-  searchInput?.addEventListener("input", updateCatalog);
-  updateCatalog();
-
-  return () => {
-    categoryButtons.forEach((button) => {
-      button.removeEventListener("click", handleCategoryClick);
-    });
-    searchInput?.removeEventListener("input", updateCatalog);
-  };
 }
