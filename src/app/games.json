@@ -1,0 +1,118 @@
+{
+    "games": [
+        {
+            "name": "Minecraft",
+            "category": "Sandbox",
+            "img": "minecraft.webp",
+            "path": "minecraft"
+        },
+        {
+            "name": "Bloxd.io",
+            "category": "Sandbox",
+            "img": "bloxd.jpg",
+            "path": "https://collabspace.space/"
+        },
+        {
+            "name": "Steal a Brainrot",
+            "category": "Multijugador",
+            "img": "brainrot.jpg",
+            "path": "brainrot"
+        },
+        {
+            "name": "Subway Surfers",
+            "category": "Arcade",
+            "img": "surfers.jpg",
+            "path": "https://subwaysurfersonline.es/wp-content/uploads/games/html5/S/subway-surfers-san-francisco-main/index.html"
+        },
+        {
+            "name": "Geometry Dash",
+            "category": "Plataformas",
+            "img": "geometry.png",
+            "path": "geometry"
+        },
+        {
+            "name": "Friday Night Funkin'",
+            "category": "Ritmo",
+            "img": "friday-night-funkin.avif",
+            "path": ""
+        },
+        {
+            "name": "Granny",
+            "category": "Terror",
+            "img": "granny.webp",
+            "path": ""
+        },
+        {
+            "name": "Among Us",
+            "category": "Multijugador",
+            "img": "amongus.webp",
+            "path": ""
+        },
+        {
+            "name": "Super Mario Bros.",
+            "category": "Plataformas",
+            "img": "mario.jpg",
+            "path": ""
+        },
+        {
+            "name": "Brawl Stars",
+            "category": "Acción",
+            "img": "brawl.webp",
+            "path": ""
+        },
+        {
+            "name": "Ragdoll Hit",
+            "category": "Física",
+            "img": "ragdoll.webp",
+            "path": ""
+        },
+        {
+            "name": "Stickman Hook",
+            "category": "Habilidad",
+            "img": "stickmano.avif",
+            "path": ""
+        },
+        {
+            "name": "Hazmob: Shooter",
+            "category": "Acción",
+            "img": "hazmob.jpg",
+            "path": ""
+        },
+        {
+            "name": "Level Devil",
+            "category": "Plataformas",
+            "img": "level-devil.png",
+            "path": ""
+        },
+        {
+            "name": "Drive Mad",
+            "category": "Conducción",
+            "img": "drive-mad.webp",
+            "path": ""
+        },
+        {
+            "name": "Plantas Vs Zombis",
+            "category": "Habilidad",
+            "img": "pvz.webp",
+            "path": ""
+        },
+        {
+            "name": "Veck.io",
+            "category": "Acción",
+            "img": "veck.webp",
+            "path": ""
+        },
+        {
+            "name": "Fortzone Battle Royale",
+            "category": "Acción",
+            "img": "fornite.jpg",
+            "path": ""
+        },
+        {
+            "name": "Google Snake",
+            "category": "Arcade",
+            "img": "snake.webp",
+            "path": ""
+        }
+    ]
+}
