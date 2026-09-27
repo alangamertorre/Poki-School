@@ -215,10 +215,9 @@ h1 {
 }
 
 .games-grid {
-  justify-content: center;
   display: grid;
   gap: 18px;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 250px));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
 .game-card {
