@@ -55,6 +55,12 @@
             "path": ""
         },
         {
+            "name": "The Simpson, Hit & Run",
+            "category": "Acción",
+            "img": "simpson.png",
+            "path": "https://vheissu.github.io/hit-and-run-web/"
+        },
+        {
             "name": "Brawl Stars",
             "category": "Acción",
             "img": "brawl.webp",
