@@ -7,12 +7,6 @@
             "path": "minecraft"
         },
         {
-            "name": "Bloxd.io",
-            "category": "Sandbox",
-            "img": "bloxd.jpg",
-            "path": "https://collabspace.space/"
-        },
-        {
             "name": "Steal a Brainrot",
             "category": "Multijugador",
             "img": "brainrot.jpg",
@@ -55,7 +49,7 @@
             "path": ""
         },
         {
-            "name": "The Simpson, Hit & Run",
+            "name": "The Simpsons: Hit & Run",
             "category": "Acción",
             "img": "simpson.png",
             "path": "https://vheissu.github.io/hit-and-run-web/"
@@ -64,7 +58,13 @@
             "name": "Brawl Stars",
             "category": "Acción",
             "img": "brawl.webp",
-            "path": "https://yandex.com/games/app/battle-starr-387326"
+            "path": "blob:https://752624420-atari-embeds.googleusercontent.com/55df3edc-2948-4b5c-be26-01b9d72ecd66"
+        },
+        {
+            "name": "Brawl Guys",
+            "category": "Acción",
+            "img": "brawl.webp",
+            "path": "blob:https://31571502-atari-embeds.googleusercontent.com/be7e6021-d00f-4bbb-a705-19219ca73157"
         },
         {
             "name": "Ragdoll Hit",
@@ -94,7 +94,13 @@
             "name": "Drive Mad",
             "category": "Conducción",
             "img": "drive-mad.webp",
-            "path": ""
+            "path": "https://godzilla214.github.io/drive-mad-main/"
+        },
+        {
+            "name": "Drive Taxi",
+            "category": "Conducción",
+            "img": "",
+            "path": "https://godzilla214.github.io/drive-mad-main/"
         },
         {
             "name": "Plantas Vs Zombis",
