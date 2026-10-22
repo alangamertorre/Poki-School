@@ -14,7 +14,9 @@ const categoriesMap = [
 
 function gameHref(path) {
   if (!path) return "#";
-  return path.startsWith("http") ? path : `/games/${path}/index.html`;
+  return path.startsWith("http") || path.startsWith("blob")
+    ? path
+    : `/games/${path}/index.html`;
 }
 
 export default function Home() {
