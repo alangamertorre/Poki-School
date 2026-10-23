@@ -42,6 +42,12 @@
             "img": "mario.jpg",
             "path": ""
         },
+{
+"name": "Tomb Raider, Ps2",
+"category": "Acción",
+"img": "tomb-raider.jpg",
+"path": "https://xproger.github.io/OpenLara/"
+},
         {
             "name": "The Simpsons: Hit & Run",
             "category": "Acción",
