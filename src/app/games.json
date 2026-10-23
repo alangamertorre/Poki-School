@@ -25,12 +25,6 @@
             "path": "geometry"
         },
         {
-            "name": "Friday Night Funkin'",
-            "category": "Ritmo",
-            "img": "friday-night-funkin.avif",
-            "path": ""
-        },
-        {
             "name": "Granny",
             "category": "Terror",
             "img": "granny.webp",
