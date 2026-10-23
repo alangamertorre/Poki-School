@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import catalog from "./games.json";
 import arrayCategories from "./categories.json";
 import { initializeCatalog } from "./script.js";
@@ -20,7 +20,198 @@ function gameHref(path) {
 }
 
 export default function Home() {
+  const [alanAccess, setAlanAccess] = useState("closed");
+  const [alanPassword, setAlanPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [isSubmittingPassword, setIsSubmittingPassword] = useState(false);
+  const [repoFile, setRepoFile] = useState("games");
+  const [repoReloadVersion, setRepoReloadVersion] = useState(0);
+  const [repoContent, setRepoContent] = useState("");
+  const [repoView, setRepoView] = useState("editor");
+  const [repoLoading, setRepoLoading] = useState(false);
+  const [repoBusy, setRepoBusy] = useState(false);
+  const [repoError, setRepoError] = useState("");
+  const [repoNotice, setRepoNotice] = useState("");
+  const [uploadFile, setUploadFile] = useState(null);
+
   useEffect(() => initializeCatalog(), []);
+
+  useEffect(() => {
+    if (alanAccess !== "closed") return undefined;
+
+    let shortcut = "";
+
+    function handleShortcut(event) {
+      if (
+        !event.ctrlKey ||
+        !event.altKey ||
+        !event.shiftKey ||
+        event.repeat ||
+        event.isComposing
+      ) {
+        shortcut = "";
+        return;
+      }
+
+      if (["Control", "Alt", "Shift", "Meta"].includes(event.key)) return;
+
+      const key = event.key.toLowerCase();
+      if (!/^[a-z]$/.test(key)) {
+        shortcut = "";
+        return;
+      }
+
+      shortcut += key;
+      if ("alan".startsWith(shortcut)) {
+        if (shortcut === "alan") {
+          event.preventDefault();
+          setPasswordError("");
+          setAlanAccess("login");
+          shortcut = "";
+        }
+      } else {
+        shortcut = key === "a" ? "a" : "";
+      }
+    }
+
+    window.addEventListener("keydown", handleShortcut);
+    return () => window.removeEventListener("keydown", handleShortcut);
+  }, [alanAccess]);
+
+  useEffect(() => {
+    if (alanAccess !== "menu" || repoView !== "editor") return undefined;
+
+    const controller = new AbortController();
+    queueMicrotask(() => {
+      setRepoLoading(true);
+      setRepoError("");
+      setRepoNotice("");
+    });
+
+    fetch(`/api/repo?file=${repoFile}`, { signal: controller.signal })
+      .then(async (response) => {
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error || "No se pudo leer el archivo.");
+        setRepoContent(result.content);
+      })
+      .catch((error) => {
+        if (error.name !== "AbortError") setRepoError(error.message);
+      })
+      .finally(() => {
+        if (!controller.signal.aborted) setRepoLoading(false);
+      });
+
+    return () => controller.abort();
+  }, [alanAccess, repoFile, repoReloadVersion, repoView]);
+
+  function closeAlanAccess() {
+    fetch("/api/alan-auth", { method: "DELETE" }).catch((error) => {
+      console.error("Failed to end private session:", error);
+    });
+    setAlanAccess("closed");
+    setAlanPassword("");
+    setPasswordError("");
+  }
+
+  async function saveRepoFile() {
+    if (!window.confirm(`¿Guardar ${repoFile}.json en GitHub? Se creará un commit en main.`)) {
+      return;
+    }
+
+    setRepoBusy(true);
+    setRepoError("");
+    setRepoNotice("");
+    try {
+      const response = await fetch("/api/repo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "save",
+          file: repoFile,
+          content: repoContent,
+        }),
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || "No se pudo guardar.");
+      setRepoNotice(
+        result.commit ? `Guardado. Commit: ${result.commit}` : "Guardado en GitHub.",
+      );
+    } catch (error) {
+      setRepoError(error.message);
+    } finally {
+      setRepoBusy(false);
+    }
+  }
+
+  async function uploadRepoFile(event) {
+    event.preventDefault();
+    if (!uploadFile) {
+      setRepoError("Selecciona una imagen antes de subirla.");
+      return;
+    }
+    if (!window.confirm(`¿Subir ${uploadFile.name} a public/? Si ya existe, se reemplazará.`)) {
+      return;
+    }
+
+    setRepoBusy(true);
+    setRepoError("");
+    setRepoNotice("");
+    try {
+      const formData = new FormData();
+      formData.set("file", uploadFile);
+      const response = await fetch("/api/repo", {
+        method: "POST",
+        body: formData,
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || "No se pudo subir el archivo.");
+      setRepoNotice(
+        result.commit
+          ? `Subido a ${result.path}. Commit: ${result.commit}`
+          : `Subido a ${result.path}.`,
+      );
+      setUploadFile(null);
+      event.currentTarget.reset();
+    } catch (error) {
+      setRepoError(error.message);
+    } finally {
+      setRepoBusy(false);
+    }
+  }
+
+  async function handlePasswordSubmit(event) {
+    event.preventDefault();
+    setIsSubmittingPassword(true);
+    setPasswordError("");
+
+    try {
+      const response = await fetch("/api/alan-auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: alanPassword }),
+      });
+      const result = await response.json();
+
+      if (response.status === 401) {
+        setPasswordError("Contraseña incorrecta. Inténtalo de nuevo.");
+        return;
+      }
+
+      if (!response.ok) {
+        setPasswordError(
+          result.error || "No se pudo comprobar la contraseña.",
+        );
+        return;
+      }
+
+      setAlanPassword("");
+      setAlanAccess("menu");
+    } catch {
+      setPasswordError("No se pudo conectar con el servidor.");
+    } finally {
+      setIsSubmittingPassword(false);
+    }
+  }
 
   return (
     <div className="site-shell">
@@ -223,6 +414,195 @@ export default function Home() {
           <span className="status-dot" /> CONEXIÓN ESTABLE
         </span>
       </footer>
+
+      {alanAccess !== "closed" && (
+        <div
+          className="alan-access-overlay"
+          onClick={(event) => {
+            if (event.target === event.currentTarget) closeAlanAccess();
+          }}
+        >
+          <section
+            aria-labelledby="alan-access-title"
+            aria-modal="true"
+            className="alan-access-dialog"
+            onKeyDown={(event) => {
+              if (event.key === "Escape") closeAlanAccess();
+            }}
+            role="dialog"
+          >
+            <div className="terminal-titlebar">
+              <div aria-hidden="true" className="terminal-controls">
+                <span />
+                <span />
+                <span />
+              </div>
+              <span>alan@nexus: ~</span>
+              <span className="terminal-titlebar__status">TTY1</span>
+            </div>
+            <div className="alan-access-heading">
+              <h2 id="alan-access-title">
+                {alanAccess === "login" ? "ACCESO PRIVADO" : "SESIÓN PRIVADA"}
+              </h2>
+              <button
+                aria-label="Cerrar consola"
+                className="alan-access-close"
+                onClick={closeAlanAccess}
+                type="button"
+              >
+                ×
+              </button>
+            </div>
+
+            {alanAccess === "login" ? (
+              <form
+                className="alan-access-form"
+                onSubmit={handlePasswordSubmit}
+              >
+                <p className="terminal-command">alan@nexus:~$ ./verify-user</p>
+                <label htmlFor="alan-password">
+                  Hola Alan, para saber que eres tú inserta tu contraseña:
+                </label>
+                <div className="terminal-input-line">
+                  <label htmlFor="alan-password">Contraseña:</label>
+                  <input
+                    autoComplete="current-password"
+                    autoFocus
+                    id="alan-password"
+                    onChange={(event) => {
+                      setAlanPassword(event.target.value);
+                      setPasswordError("");
+                    }}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter") {
+                        event.preventDefault();
+                        event.currentTarget.form?.requestSubmit();
+                      }
+                    }}
+                    placeholder="..."
+                    type="password"
+                    value={alanPassword}
+                    disabled={isSubmittingPassword}
+                  />
+                </div>
+                {passwordError && (
+                  <p className="alan-access-error" role="alert">
+                    {passwordError}
+                  </p>
+                )}
+                <p aria-live="polite" className="terminal-hint">
+                  {isSubmittingPassword
+                    ? "Verificando identidad..."
+                    : "Pulsa ENTER para continuar · ESC para salir"}
+                </p>
+              </form>
+            ) : (
+              <div aria-label="Herramientas de API del repositorio" className="repo-console">
+                <p className="terminal-command">alan@nexus:~$ repo-api --help</p>
+                <p className="repo-console__description">
+                  GitHub Contents API · alangamertorre/Poki-School · rama main
+                </p>
+
+                <nav aria-label="Operaciones de la API" className="repo-console__tabs">
+                  <button
+                    aria-pressed={repoView === "editor" && repoFile === "games"}
+                    className={repoView === "editor" && repoFile === "games" ? "active" : ""}
+                    onClick={() => {
+                      setRepoView("editor");
+                      setRepoFile("games");
+                    }}
+                    type="button"
+                  >
+                    games.json
+                  </button>
+                  <button
+                    aria-pressed={repoView === "editor" && repoFile === "categories"}
+                    className={repoView === "editor" && repoFile === "categories" ? "active" : ""}
+                    onClick={() => {
+                      setRepoView("editor");
+                      setRepoFile("categories");
+                    }}
+                    type="button"
+                  >
+                    categories.json
+                  </button>
+                  <button
+                    aria-pressed={repoView === "upload"}
+                    className={repoView === "upload" ? "active" : ""}
+                    onClick={() => {
+                      setRepoView("upload");
+                      setRepoError("");
+                      setRepoNotice("");
+                    }}
+                    type="button"
+                  >
+                    subir imagen
+                  </button>
+                </nav>
+
+                {repoView === "editor" ? (
+                  <div className="repo-console__editor">
+                    <div className="repo-console__filebar">
+                      <span>src/app/{repoFile}.json</span>
+                      <button
+                        disabled={repoLoading || repoBusy}
+                        onClick={() => setRepoReloadVersion((value) => value + 1)}
+                        type="button"
+                      >
+                        [ RECARGAR ]
+                      </button>
+                    </div>
+                    <textarea
+                      aria-label={`Contenido de ${repoFile}.json`}
+                      autoCapitalize="off"
+                      autoComplete="off"
+                      autoCorrect="off"
+                      disabled={repoLoading || repoBusy || Boolean(repoError)}
+                      onChange={(event) => setRepoContent(event.target.value)}
+                      spellCheck="false"
+                      value={repoLoading ? "Leyendo desde GitHub..." : repoContent}
+                    />
+                    <button
+                      className="repo-console__action"
+                      disabled={repoLoading || repoBusy || Boolean(repoError)}
+                      onClick={saveRepoFile}
+                      type="button"
+                    >
+                      {repoBusy ? "[ ENVIANDO COMMIT... ]" : "[ GUARDAR EN GITHUB ]"}
+                    </button>
+                  </div>
+                ) : (
+                  <form className="repo-console__upload" onSubmit={uploadRepoFile}>
+                    <p className="terminal-command">
+                      alan@nexus:~$ upload --target public/
+                    </p>
+                    <label htmlFor="repo-image">
+                      Archivo de imagen (AVIF, GIF, JPEG, PNG o WebP; máximo 5 MB)
+                    </label>
+                    <input
+                      accept=".avif,.gif,.jpeg,.jpg,.png,.webp"
+                      disabled={repoBusy}
+                      id="repo-image"
+                      onChange={(event) => setUploadFile(event.target.files?.[0] || null)}
+                      type="file"
+                    />
+                    <button
+                      className="repo-console__action"
+                      disabled={!uploadFile || repoBusy}
+                      type="submit"
+                    >
+                      {repoBusy ? "[ SUBIENDO... ]" : "[ SUBIR A GITHUB ]"}
+                    </button>
+                  </form>
+                )}
+
+                {repoError && <p className="repo-console__error" role="alert">{repoError}</p>}
+                {repoNotice && <p className="repo-console__notice" role="status">{repoNotice}</p>}
+              </div>
+            )}
+          </section>
+        </div>
+      )}
     </div>
   );
 }
