@@ -7,24 +7,28 @@ export function initializeCatalog() {
 
   let activeCategory = "Todos";
 
-  // Evento para los botones de categoría
-  categoryButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      activeCategory = button.dataset.category;
-      filterGames();
+  function handleCategoryClick(event) {
+    const selectedButton = event.currentTarget;
+    activeCategory = selectedButton.dataset.category;
+    filterGames();
 
-      document
-        .querySelectorAll(".category-button.active")
-        .forEach((activeButton) => activeButton.classList.remove("active"));
-      button.classList.add("active");
+    categoryButtons.forEach((button) => {
+      const isActive = button === selectedButton;
+      button.classList.toggle("active", isActive);
+      button.setAttribute("aria-pressed", String(isActive));
     });
+  }
+
+  function handleSearchInput() {
+    filterGames();
+  }
+
+  categoryButtons.forEach((button) => {
+    button.addEventListener("click", handleCategoryClick);
   });
 
-  // Evento para la barra de búsqueda (por texto)
   if (searchInput) {
-    searchInput.addEventListener("input", () => {
-      filterGames();
-    });
+    searchInput.addEventListener("input", handleSearchInput);
   }
 
   // Función única de filtrado combinado
@@ -60,4 +64,11 @@ export function initializeCatalog() {
       emptyState.style.display = count === 0 ? "block" : "none";
     }
   }
+
+  return () => {
+    categoryButtons.forEach((button) => {
+      button.removeEventListener("click", handleCategoryClick);
+    });
+    searchInput?.removeEventListener("input", handleSearchInput);
+  };
 }

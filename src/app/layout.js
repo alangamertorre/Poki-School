@@ -1,12 +1,13 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "Poki School | Juegos online",
-  description: "Una colección de juegos online para jugar en el navegador.",
+  title: "NEXUS//PLAY | Arcade online",
+  description:
+    "Entra en NEXUS//PLAY: un portal de juegos online para explorar y jugar directamente en tu navegador.",
   icons: {
-    icon: "/poki.svg",
-    shortcut: "/poki.svg",
-    apple: "/poki.svg",
+    icon: "/nexus.svg",
+    shortcut: "/nexus.svg",
+    apple: "/nexus.svg",
   },
 };
 
