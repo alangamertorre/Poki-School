@@ -42,12 +42,18 @@
             "img": "mario.jpg",
             "path": ""
         },
-{
-"name": "Tomb Raider, Ps2",
-"category": "Acción",
-"img": "tomb-raider.jpg",
-"path": "https://xproger.github.io/OpenLara/"
-},
+        {
+            "name": "Tomb Raider, Ps2",
+            "category": "Acción",
+            "img": "tomb-raider.jpg",
+            "path": "https://xproger.github.io/OpenLara/"
+        },
+        {
+            "name": "GTA New York",
+            "category": "Conducción",
+            "img": "gta-ny.jpg",
+            "path": "https://html5.gamemonetize.co/zt4qt847w9o5z06a4ayj5kwy2p9eyifi/"
+        },
         {
             "name": "The Simpsons: Hit & Run",
             "category": "Acción",
@@ -67,21 +73,15 @@
             "path": "https://sites.google.com/site/populardoodlegames/brawl-guys"
         },
         {
-            "name": "Ragdoll Hit",
-            "category": "Física",
-            "img": "ragdoll.webp",
-            "path": ""
+            "name": "Spiderman",
+            "category": "Habilidad",
+            "img": "spiderman",
+            "path": "https://html-classic.itch.zone/html/19388060/index.html?v=1790297297"
         },
         {
             "name": "Stickman Hook",
             "category": "Habilidad",
             "img": "stickmano.avif",
-            "path": ""
-        },
-        {
-            "name": "Hazmob: Shooter",
-            "category": "Acción",
-            "img": "hazmob.jpg",
             "path": ""
         },
         {
@@ -125,6 +125,12 @@
             "category": "Arcade",
             "img": "snake.webp",
             "path": "https://masonsunblockedgames.github.io/MasonsUnblockedGames/googsnake/inframe.html"
+        },
+        {
+            "name": "Classic Games: Retario",
+            "category": "Hubs",
+            "img": "retario.svg",
+            "path": "https://retrario.com/"
         }
     ]
 }
