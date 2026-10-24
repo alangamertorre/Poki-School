@@ -4,134 +4,177 @@
             "name": "Minecraft",
             "category": "Sandbox",
             "img": "minecraft.webp",
-            "path": "minecraft"
+            "path": "minecraft",
+            "visibility": "visible",
+            "alert": ""
         },
         {
             "name": "Steal a Brainrot",
             "category": "Multijugador",
             "img": "brainrot.jpg",
-            "path": "brainrot"
+            "path": "brainrot",
+            "visibility": "visible",
+            "alert": ""
         },
         {
             "name": "Subway Surfers",
             "category": "Arcade",
             "img": "surfers.jpeg",
-            "path": "https://subwaysurfersonline.es/wp-content/uploads/games/html5/S/subway-surfers-san-francisco-main/index.html"
+            "path": "https://subwaysurfersonline.es/wp-content/uploads/games/html5/S/subway-surfers-san-francisco-main/index.html",
+            "visibility": "visible",
+            "alert": ""
         },
         {
             "name": "Geometry Dash",
             "category": "Plataformas",
             "img": "geometry.png",
-            "path": "geometry"
+            "path": "geometry",
+            "visibility": "visible",
+            "alert": ""
         },
         {
             "name": "Granny",
             "category": "Terror",
             "img": "granny.webp",
-            "path": "granny"
+            "path": "granny",
+            "visibility": "visible",
+            "alert": ""
         },
         {
             "name": "Among Us",
             "category": "Multijugador",
             "img": "amongus.webp",
-            "path": "https://stgames.top/unity/amongus/"
+            "path": "https://stgames.top/unity/amongus/",
+            "visibility": "visible",
+            "alert": ""
         },
         {
             "name": "Super Mario Bros.",
             "category": "Plataformas",
             "img": "mario.jpg",
-            "path": ""
+            "path": "",
+            "visibility": "visible",
+            "alert": ""
         },
         {
             "name": "Tomb Raider, Ps2",
             "category": "Acción",
             "img": "tomb-raider.jpg",
             "path": "https://xproger.github.io/OpenLara/",
-            "alert1": "SOLO FUNCIONA CON PANTALLAS TACTILES, USA EL DEDO PARA JUGAR!"
+            "visibility": "visible",
+            "alert": "SOLO FUNCIONA CON PANTALLAS TACTILES, USA EL DEDO PARA JUGAR!"
         },
         {
             "name": "GTA New York",
             "category": "Conducción",
             "img": "gta-ny.jpg",
-            "path": "https://html5.gamemonetize.co/zt4qt847w9o5z06a4ayj5kwy2p9eyifi/"
+            "path": "https://html5.gamemonetize.co/zt4qt847w9o5z06a4ayj5kwy2p9eyifi/",
+            "visibility": "visible",
+            "alert": ""
         },
         {
             "name": "The Simpsons: Hit & Run",
             "category": "Acción",
             "img": "simpson.png",
-            "path": "https://vheissu.github.io/hit-and-run-web/"
+            "path": "https://vheissu.github.io/hit-and-run-web/",
+            "visibility": "visible",
+            "alert": ""
         },
         {
             "name": "Brawl Stars",
             "category": "Acción",
             "img": "brawl.webp",
-            "path": "https://sites.google.com/view/poki-school-cdn/juegos/brawl-stars"
+            "path": "https://sites.google.com/view/poki-school-cdn/juegos/brawl-stars",
+            "visibility": "visible",
+            "alert": ""
         },
         {
             "name": "Brawl Guys",
             "category": "Acción",
             "img": "brawl.webp",
-            "path": "https://sites.google.com/site/populardoodlegames/brawl-guys"
+            "path": "https://sites.google.com/site/populardoodlegames/brawl-guys",
+            "visibility": "visible",
+            "alert": ""
         },
         {
             "name": "Spiderman",
             "category": "Habilidad",
             "img": "spiderman.webp",
-            "path": "https://html-classic.itch.zone/html/19388060/index.html?v=1790297297"
+            "path": "https://html-classic.itch.zone/html/19388060/index.html?v=1790297297",
+            "visibility": "visible",
+            "alert": ""
         },
         {
             "name": "Stickman Hook",
             "category": "Habilidad",
             "img": "stickmano.avif",
-            "path": ""
+            "path": "",
+            "visibility": "visible",
+            "alert": ""
         },
         {
             "name": "Level Devil",
             "category": "Plataformas",
             "img": "level-devil.png",
-            "path": "https://10minutestilldawnonline.github.io/a77/level-devil/"
+            "path": "https://10minutestilldawnonline.github.io/a77/level-devil/",
+            "visibility": "visible",
+            "alert": ""
         },
         {
             "name": "Drive Mad",
             "category": "Conducción",
             "img": "drive-mad.webp",
-            "path": "https://godzilla214.github.io/drive-mad-main/"
+            "path": "https://godzilla214.github.io/drive-mad-main/",
+            "visibility": "visible",
+            "alert": ""
         },
         {
             "name": "Drive Taxi",
             "category": "Conducción",
             "img": "drive-taxi.jpg",
-            "path": "https://sites.google.com/view/poki-school-cdn/juegos/drive-taxi"
+            "path": "https://sites.google.com/view/poki-school-cdn/juegos/drive-taxi",
+            "visibility": "visible",
+            "alert": ""
         },
         {
             "name": "Plantas Vs Zombis",
             "category": "Habilidad",
             "img": "pvz.webp",
-            "path": ""
+            "path": "",
+            "visibility": "visible",
+            "alert": ""
         },
         {
             "name": "Veck.io",
             "category": "Acción",
             "img": "veck.webp",
-            "path": "https://sites.google.com/view/galaxy-games-portal/veck-io"
+            "path": "https://sites.google.com/view/galaxy-games-portal/veck-io",
+            "visibility": "visible",
+            "alert": ""
         },
         {
             "name": "Fortzone Battle Royale",
             "category": "Acción",
             "img": "fornite.jpg",
-            "path": "https://sites.google.com/view/galaxy-games-portal/fortnite-io"
+            "path": "https://sites.google.com/view/galaxy-games-portal/fortnite-io",
+            "visibility": "visible",
+            "alert": ""
         },
         {
             "name": "Google Snake",
             "category": "Arcade",
             "img": "snake.webp",
-            "path": "https://masonsunblockedgames.github.io/MasonsUnblockedGames/googsnake/inframe.html"
+            "path": "https://masonsunblockedgames.github.io/MasonsUnblockedGames/googsnake/inframe.html",
+            "visibility": "visible",
+            "alert": ""
         },
         {
             "name": "Classic Games: Retario",
             "category": "Hubs",
             "img": "retario.svg",
-            "path": "https://retrario.com/"
+            "path": "https://retrario.com/",
+            "visibility": "visible",
+            "alert": ""
         }
     ]
 }

@@ -12,6 +12,9 @@ const categoriesMap = [
   "Todos",
   ...new Set(arrayCategories.categories.map((game) => game)),
 ];
+const visibleGames = catalog.games.filter(
+  (game) => game.visibility !== "hidden",
+);
 
 function configureMonaco(monaco) {
   monaco.editor.defineTheme("nexus-terminal", {
@@ -128,7 +131,8 @@ export default function Home() {
     fetch(`/api/repo?file=${repoFile}`, { signal: controller.signal })
       .then(async (response) => {
         const result = await response.json();
-        if (!response.ok) throw new Error(result.error || "No se pudo leer el archivo.");
+        if (!response.ok)
+          throw new Error(result.error || "No se pudo leer el archivo.");
         setRepoContent(result.content);
       })
       .catch((error) => {
@@ -154,7 +158,11 @@ export default function Home() {
     content = repoEditorRef.current?.getValue() ?? repoContent,
     file = repoFile,
   ) {
-    if (!window.confirm(`¿Guardar ${file}.json en GitHub? Se creará un commit en main.`)) {
+    if (
+      !window.confirm(
+        `¿Guardar ${file}.json en GitHub? Se creará un commit en main.`,
+      )
+    ) {
       return;
     }
 
@@ -174,7 +182,9 @@ export default function Home() {
       const result = await response.json();
       if (!response.ok) throw new Error(result.error || "No se pudo guardar.");
       setRepoNotice(
-        result.commit ? `Guardado. Commit: ${result.commit}` : "Guardado en GitHub.",
+        result.commit
+          ? `Guardado. Commit: ${result.commit}`
+          : "Guardado en GitHub.",
       );
     } catch (error) {
       setRepoError(error.message);
@@ -189,7 +199,11 @@ export default function Home() {
       setRepoError("Selecciona una imagen antes de subirla.");
       return;
     }
-    if (!window.confirm(`¿Subir ${uploadFile.name} a public/? Si ya existe, se reemplazará.`)) {
+    if (
+      !window.confirm(
+        `¿Subir ${uploadFile.name} a public/? Si ya existe, se reemplazará.`,
+      )
+    ) {
       return;
     }
 
@@ -204,7 +218,8 @@ export default function Home() {
         body: formData,
       });
       const result = await response.json();
-      if (!response.ok) throw new Error(result.error || "No se pudo subir el archivo.");
+      if (!response.ok)
+        throw new Error(result.error || "No se pudo subir el archivo.");
       setRepoNotice(
         result.commit
           ? `Subido a ${result.path}. Commit: ${result.commit}`
@@ -238,9 +253,7 @@ export default function Home() {
       }
 
       if (!response.ok) {
-        setPasswordError(
-          result.error || "No se pudo comprobar la contraseña.",
-        );
+        setPasswordError(result.error || "No se pudo comprobar la contraseña.");
         return;
       }
 
@@ -251,6 +264,10 @@ export default function Home() {
     } finally {
       setIsSubmittingPassword(false);
     }
+  }
+
+  function alertGame(message) {
+    return window.confirm(message) && window.confirm("¿Seguro?");
   }
 
   return (
@@ -323,7 +340,7 @@ export default function Home() {
             <div className="hero-meta">
               <span>
                 <strong>
-                  {catalog.games.length.toString().padStart(2, "0")}
+                  {visibleGames.length.toString().padStart(2, "0")}
                 </strong>{" "}
                 JUEGOS DISPONIBLES
               </span>
@@ -358,7 +375,7 @@ export default function Home() {
               </span>
             </div>
             <span className="art-index">
-              N° 001 — {String(catalog.games.length).padStart(3, "0")}
+              N° 001 — {String(visibleGames.length).padStart(3, "0")}
             </span>
           </div>
 
@@ -375,7 +392,7 @@ export default function Home() {
                 EXPLORA EL <span>CATÁLOGO</span>
               </h2>
             </div>
-            <p className="game-count">{catalog.games.length} juegos</p>
+            <p className="game-count">{visibleGames.length} juegos</p>
           </div>
 
           <nav className="category-list" aria-label="Filtrar por categoría">
@@ -402,13 +419,21 @@ export default function Home() {
           </nav>
 
           <section className="games-grid" aria-label="Catálogo de juegos">
-            {catalog.games.map((game, index) => (
+            {visibleGames.map((game, index) => (
               <a
                 className="game-card"
                 data-category={game.category}
                 data-name={game.name}
                 href={gameHref(game.path)}
                 key={game.name}
+                onClick={(event) => {
+                  if (!game.alert) return;
+
+                  event.preventDefault();
+                  if (alertGame(game.alert)) {
+                    window.location.assign(gameHref(game.path));
+                  }
+                }}
                 style={{ "--card-index": index }}
               >
                 <div className="game-card__image-wrap">
@@ -537,16 +562,28 @@ export default function Home() {
                 </p>
               </form>
             ) : (
-              <div aria-label="Herramientas de API del repositorio" className="repo-console">
-                <p className="terminal-command">alan@nexus:~$ repo-api --help</p>
+              <div
+                aria-label="Herramientas de API del repositorio"
+                className="repo-console"
+              >
+                <p className="terminal-command">
+                  alan@nexus:~$ repo-api --help
+                </p>
                 <p className="repo-console__description">
                   GitHub Contents API · alangamertorre/Poki-School · rama main
                 </p>
 
-                <nav aria-label="Operaciones de la API" className="repo-console__tabs">
+                <nav
+                  aria-label="Operaciones de la API"
+                  className="repo-console__tabs"
+                >
                   <button
                     aria-pressed={repoView === "editor" && repoFile === "games"}
-                    className={repoView === "editor" && repoFile === "games" ? "active" : ""}
+                    className={
+                      repoView === "editor" && repoFile === "games"
+                        ? "active"
+                        : ""
+                    }
                     onClick={() => {
                       setRepoView("editor");
                       setRepoFile("games");
@@ -556,8 +593,14 @@ export default function Home() {
                     games.json
                   </button>
                   <button
-                    aria-pressed={repoView === "editor" && repoFile === "categories"}
-                    className={repoView === "editor" && repoFile === "categories" ? "active" : ""}
+                    aria-pressed={
+                      repoView === "editor" && repoFile === "categories"
+                    }
+                    className={
+                      repoView === "editor" && repoFile === "categories"
+                        ? "active"
+                        : ""
+                    }
                     onClick={() => {
                       setRepoView("editor");
                       setRepoFile("categories");
@@ -589,7 +632,9 @@ export default function Home() {
                       </span>
                       <button
                         disabled={repoLoading || repoBusy}
-                        onClick={() => setRepoReloadVersion((value) => value + 1)}
+                        onClick={() =>
+                          setRepoReloadVersion((value) => value + 1)
+                        }
                         type="button"
                       >
                         [ RECARGAR ]
@@ -629,7 +674,10 @@ export default function Home() {
                                 monaco.KeyMod.Alt |
                                 monaco.KeyCode.KeyF,
                             ],
-                            run: () => editor.getAction("editor.action.formatDocument")?.run(),
+                            run: () =>
+                              editor
+                                .getAction("editor.action.formatDocument")
+                                ?.run(),
                           });
                         }}
                         options={{
@@ -642,7 +690,8 @@ export default function Home() {
                           insertSpaces: true,
                           minimap: { enabled: true },
                           padding: { top: 12, bottom: 12 },
-                          readOnly: repoLoading || repoBusy || Boolean(repoError),
+                          readOnly:
+                            repoLoading || repoBusy || Boolean(repoError),
                           scrollBeyondLastLine: false,
                           tabSize: 2,
                           wordWrap: "on",
@@ -657,22 +706,30 @@ export default function Home() {
                       onClick={() => saveRepoFile()}
                       type="button"
                     >
-                      {repoBusy ? "[ ENVIANDO COMMIT... ]" : "[ GUARDAR EN GITHUB ]"}
+                      {repoBusy
+                        ? "[ ENVIANDO COMMIT... ]"
+                        : "[ GUARDAR EN GITHUB ]"}
                     </button>
                   </div>
                 ) : (
-                  <form className="repo-console__upload" onSubmit={uploadRepoFile}>
+                  <form
+                    className="repo-console__upload"
+                    onSubmit={uploadRepoFile}
+                  >
                     <p className="terminal-command">
                       alan@nexus:~$ upload --target public/
                     </p>
                     <label htmlFor="repo-image">
-                      Archivo de imagen (AVIF, GIF, JPEG, PNG o WebP; máximo 5 MB)
+                      Archivo de imagen (AVIF, GIF, JPEG, PNG o WebP; máximo 5
+                      MB)
                     </label>
                     <input
                       accept=".avif,.gif,.jpeg,.jpg,.png,.webp"
                       disabled={repoBusy}
                       id="repo-image"
-                      onChange={(event) => setUploadFile(event.target.files?.[0] || null)}
+                      onChange={(event) =>
+                        setUploadFile(event.target.files?.[0] || null)
+                      }
                       type="file"
                     />
                     <button
@@ -685,8 +742,16 @@ export default function Home() {
                   </form>
                 )}
 
-                {repoError && <p className="repo-console__error" role="alert">{repoError}</p>}
-                {repoNotice && <p className="repo-console__notice" role="status">{repoNotice}</p>}
+                {repoError && (
+                  <p className="repo-console__error" role="alert">
+                    {repoError}
+                  </p>
+                )}
+                {repoNotice && (
+                  <p className="repo-console__notice" role="status">
+                    {repoNotice}
+                  </p>
+                )}
               </div>
             )}
           </section>

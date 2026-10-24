@@ -42,9 +42,15 @@ function validJsonDocument(file, content) {
       data.games.every(
         (game) =>
           game &&
+          typeof game === "object" &&
+          !Array.isArray(game) &&
           ["name", "category", "img", "path"].every(
             (key) => typeof game[key] === "string",
-          ),
+          ) &&
+          (game.visibility === undefined ||
+            game.visibility === "visible" ||
+            game.visibility === "hidden") &&
+          (game.alert === undefined || typeof game.alert === "string"),
       )
     );
   }
