@@ -46,7 +46,8 @@
             "name": "Tomb Raider, Ps2",
             "category": "Acción",
             "img": "tomb-raider.jpg",
-            "path": "https://xproger.github.io/OpenLara/"
+            "path": "https://xproger.github.io/OpenLara/",
+            "alert1": "SOLO FUNCIONA CON PANTALLAS TACTILES, USA EL DEDO PARA JUGAR!"
         },
         {
             "name": "GTA New York",
