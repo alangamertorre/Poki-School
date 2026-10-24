@@ -72,3 +72,67 @@ export function initializeCatalog() {
     searchInput?.removeEventListener("input", handleSearchInput);
   };
 }
+
+export function backgroundCursor(container) {
+  if (!(container instanceof HTMLElement)) return () => {};
+
+  const originalBackgroundImage = container.style.backgroundImage;
+  let activeTarget = null;
+
+  function clearActiveTarget() {
+    activeTarget?.classList.remove("cursor-border-active");
+    activeTarget = null;
+  }
+
+  function handleMouseMove(event) {
+    const bounds = container.getBoundingClientRect();
+    const cursorX = event.clientX - bounds.left;
+    const cursorY = event.clientY - bounds.top;
+
+    container.style.backgroundImage = `radial-gradient(circle 180px at ${cursorX}px ${cursorY}px, rgb(180 255 57 / 10%), transparent 80%)`;
+
+    if (!(event.target instanceof Element)) {
+      clearActiveTarget();
+      return;
+    }
+
+    const target = event.target.closest(
+      ".game-card, .category-button, .search-box",
+    );
+    if (!target || !container.contains(target)) {
+      clearActiveTarget();
+      return;
+    }
+
+    if (activeTarget !== target) {
+      clearActiveTarget();
+      activeTarget = target;
+      activeTarget.classList.add("cursor-border-active");
+    }
+
+    const targetBounds = target.getBoundingClientRect();
+    target.style.setProperty(
+      "--border-x",
+      `${event.clientX - targetBounds.left}px`,
+    );
+    target.style.setProperty(
+      "--border-y",
+      `${event.clientY - targetBounds.top}px`,
+    );
+  }
+
+  function handlePointerLeave() {
+    clearActiveTarget();
+    container.style.backgroundImage = originalBackgroundImage;
+  }
+
+  container.addEventListener("pointermove", handleMouseMove);
+  container.addEventListener("pointerleave", handlePointerLeave);
+
+  return () => {
+    container.removeEventListener("pointermove", handleMouseMove);
+    container.removeEventListener("pointerleave", handlePointerLeave);
+    clearActiveTarget();
+    container.style.backgroundImage = originalBackgroundImage;
+  };
+}

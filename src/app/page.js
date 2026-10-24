@@ -6,7 +6,7 @@ import Editor from "@monaco-editor/react";
 import { useEffect, useRef, useState } from "react";
 import catalog from "./games.json";
 import arrayCategories from "./categories.json";
-import { initializeCatalog } from "./script.js";
+import { backgroundCursor, initializeCatalog } from "./script.js";
 
 const categoriesMap = [
   "Todos",
@@ -54,6 +54,7 @@ function gameHref(path) {
 }
 
 export default function Home() {
+  const shellRef = useRef(null);
   const [alanAccess, setAlanAccess] = useState("closed");
   const [alanPassword, setAlanPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -71,6 +72,8 @@ export default function Home() {
   const [uploadFile, setUploadFile] = useState(null);
 
   useEffect(() => initializeCatalog(), []);
+
+  useEffect(() => backgroundCursor(shellRef.current), []);
 
   useEffect(() => {
     repoFileRef.current = repoFile;
@@ -271,7 +274,7 @@ export default function Home() {
   }
 
   return (
-    <div className="site-shell">
+    <div className="site-shell" ref={shellRef}>
       <div className="boot-mask" aria-hidden="true">
         <div className="boot-mask__content">
           <span className="brand-mark brand-mark--boot">&gt;_</span>

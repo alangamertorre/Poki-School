@@ -206,18 +206,49 @@ main,
 
 .search-box {
   align-items: center;
-  border: 1px solid var(--line);
+  border: 1px solid transparent;
   border-radius: var(--radius-md);
   display: flex;
   gap: 10px;
   height: 38px;
+  isolation: isolate;
   padding: 0 9px 0 11px;
+  position: relative;
   transition: border-color .2s ease, background .2s ease;
+}
+
+.search-box::after,
+.category-button::after,
+.game-card::after {
+  background: radial-gradient(
+    130px circle at var(--border-x, -100px) var(--border-y, -100px),
+    rgb(180 255 57 / 95%),
+    rgb(180 255 57 / 35%) 35%,
+    transparent 75%
+  );
+  content: "";
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  transition: opacity .18s ease;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 1px;
+  border-radius: inherit;
+}
+
+.search-box.cursor-border-active::after,
+.category-button.cursor-border-active::after,
+.game-card.cursor-border-active::after {
+  opacity: 1;
 }
 
 .search-box:focus-within {
   background: var(--surface);
-  border-color: var(--green-dim);
 }
 
 .search-box>span {
@@ -579,20 +610,21 @@ main,
 
 .category-button {
   background: transparent;
-  border: 1px solid var(--line);
+  border: 1px solid transparent;
   border-radius: 999px;
   color: #9ca8a4;
   cursor: pointer;
   flex: 0 0 auto;
   font: 10px var(--mono);
+  isolation: isolate;
   padding: 10px 12px;
+  position: relative;
   transition: background .2s ease, border-color .2s ease, color .2s ease;
 }
 
 .category-button:hover,
 .category-button.active {
   background: rgb(180 255 57 / 8%);
-  border-color: var(--green-dim);
   color: var(--green);
 }
 
@@ -627,20 +659,21 @@ main,
 .game-card {
   animation: card-reveal .55s calc(var(--card-index, 0) * 35ms + .2s) both;
   background: var(--surface);
-  border: 1px solid var(--line);
+  border: 1px solid transparent;
   border-radius: var(--radius-lg);
   color: var(--text);
   display: flex;
   flex-direction: column;
   min-width: 0;
   overflow: hidden;
+  isolation: isolate;
+  position: relative;
   text-decoration: none;
   transition: border-color .25s ease, background .25s ease, transform .25s ease;
 }
 
 .game-card:hover {
   background: var(--surface-raised);
-  border-color: var(--green-dim);
   transform: translateY(-5px);
 }
 
