@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import Editor from "@monaco-editor/react";
+import { useEffect, useRef, useState } from "react";
 import catalog from "./games.json";
 import arrayCategories from "./categories.json";
 import { initializeCatalog } from "./script.js";
@@ -11,6 +12,36 @@ const categoriesMap = [
   "Todos",
   ...new Set(arrayCategories.categories.map((game) => game)),
 ];
+
+function configureMonaco(monaco) {
+  monaco.editor.defineTheme("nexus-terminal", {
+    base: "vs-dark",
+    inherit: true,
+    rules: [
+      { token: "string.key.json", foreground: "A3FF9C" },
+      { token: "string.value.json", foreground: "8CFF7F" },
+      { token: "number", foreground: "B4FF39" },
+      { token: "keyword", foreground: "70D9FF" },
+      { token: "delimiter.bracket", foreground: "C3F5B8" },
+    ],
+    colors: {
+      "editor.background": "#010302",
+      "editor.foreground": "#8CFF7F",
+      "editorLineNumber.foreground": "#477943",
+      "editorLineNumber.activeForeground": "#B4FFAE",
+      "editorCursor.foreground": "#53FF45",
+      "editor.selectionBackground": "#24551F",
+      "editor.lineHighlightBackground": "#071007",
+      "editorIndentGuide.background1": "#173117",
+      "editorIndentGuide.activeBackground1": "#3B7433",
+      "editorWidget.background": "#071007",
+      "editorWidget.border": "#286E24",
+      "editorSuggestWidget.background": "#071007",
+      "editorSuggestWidget.border": "#286E24",
+      "editorSuggestWidget.foreground": "#8CFF7F",
+    },
+  });
+}
 
 function gameHref(path) {
   if (!path) return "#";
@@ -27,6 +58,9 @@ export default function Home() {
   const [repoFile, setRepoFile] = useState("games");
   const [repoReloadVersion, setRepoReloadVersion] = useState(0);
   const [repoContent, setRepoContent] = useState("");
+  const repoEditorRef = useRef(null);
+  const repoFileRef = useRef(repoFile);
+  repoFileRef.current = repoFile;
   const [repoView, setRepoView] = useState("editor");
   const [repoLoading, setRepoLoading] = useState(false);
   const [repoBusy, setRepoBusy] = useState(false);
@@ -113,8 +147,11 @@ export default function Home() {
     setPasswordError("");
   }
 
-  async function saveRepoFile() {
-    if (!window.confirm(`¿Guardar ${repoFile}.json en GitHub? Se creará un commit en main.`)) {
+  async function saveRepoFile(
+    content = repoEditorRef.current?.getValue() ?? repoContent,
+    file = repoFile,
+  ) {
+    if (!window.confirm(`¿Guardar ${file}.json en GitHub? Se creará un commit en main.`)) {
       return;
     }
 
@@ -127,8 +164,8 @@ export default function Home() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           action: "save",
-          file: repoFile,
-          content: repoContent,
+          file,
+          content,
         }),
       });
       const result = await response.json();
@@ -544,6 +581,9 @@ export default function Home() {
                   <div className="repo-console__editor">
                     <div className="repo-console__filebar">
                       <span>src/app/{repoFile}.json</span>
+                      <span className="repo-console__shortcut">
+                        Ctrl/Cmd + S guardar · Shift + Alt + F formatear
+                      </span>
                       <button
                         disabled={repoLoading || repoBusy}
                         onClick={() => setRepoReloadVersion((value) => value + 1)}
@@ -552,20 +592,66 @@ export default function Home() {
                         [ RECARGAR ]
                       </button>
                     </div>
-                    <textarea
-                      aria-label={`Contenido de ${repoFile}.json`}
-                      autoCapitalize="off"
-                      autoComplete="off"
-                      autoCorrect="off"
-                      disabled={repoLoading || repoBusy || Boolean(repoError)}
-                      onChange={(event) => setRepoContent(event.target.value)}
-                      spellCheck="false"
-                      value={repoLoading ? "Leyendo desde GitHub..." : repoContent}
-                    />
+                    <div className="repo-console__monaco">
+                      <Editor
+                        aria-label={`Contenido de ${repoFile}.json`}
+                        beforeMount={configureMonaco}
+                        height="100%"
+                        language="json"
+                        loading={
+                          <div className="repo-console__editor-loading">
+                            Cargando Monaco Editor...
+                          </div>
+                        }
+                        onChange={(value) => setRepoContent(value ?? "")}
+                        onMount={(editor, monaco) => {
+                          repoEditorRef.current = editor;
+                          editor.addAction({
+                            id: "nexus.save-json",
+                            label: "Guardar JSON en GitHub",
+                            keybindings: [
+                              monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS,
+                            ],
+                            run: () =>
+                              saveRepoFile(
+                                editor.getValue(),
+                                repoFileRef.current,
+                              ),
+                          });
+                          editor.addAction({
+                            id: "nexus.format-json",
+                            label: "Formatear JSON",
+                            keybindings: [
+                              monaco.KeyMod.Shift |
+                                monaco.KeyMod.Alt |
+                                monaco.KeyCode.KeyF,
+                            ],
+                            run: () => editor.getAction("editor.action.formatDocument")?.run(),
+                          });
+                        }}
+                        options={{
+                          automaticLayout: true,
+                          bracketPairColorization: { enabled: true },
+                          formatOnPaste: true,
+                          formatOnType: true,
+                          fontFamily: '"Share Tech Mono", monospace',
+                          fontSize: 13,
+                          insertSpaces: true,
+                          minimap: { enabled: true },
+                          padding: { top: 12, bottom: 12 },
+                          readOnly: repoLoading || repoBusy || Boolean(repoError),
+                          scrollBeyondLastLine: false,
+                          tabSize: 2,
+                          wordWrap: "on",
+                        }}
+                        theme="nexus-terminal"
+                        value={repoLoading ? "" : repoContent}
+                      />
+                    </div>
                     <button
                       className="repo-console__action"
                       disabled={repoLoading || repoBusy || Boolean(repoError)}
-                      onClick={saveRepoFile}
+                      onClick={() => saveRepoFile()}
                       type="button"
                     >
                       {repoBusy ? "[ ENVIANDO COMMIT... ]" : "[ GUARDAR EN GITHUB ]"}
