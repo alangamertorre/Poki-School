@@ -60,7 +60,6 @@ export default function Home() {
   const [repoContent, setRepoContent] = useState("");
   const repoEditorRef = useRef(null);
   const repoFileRef = useRef(repoFile);
-  repoFileRef.current = repoFile;
   const [repoView, setRepoView] = useState("editor");
   const [repoLoading, setRepoLoading] = useState(false);
   const [repoBusy, setRepoBusy] = useState(false);
@@ -69,6 +68,10 @@ export default function Home() {
   const [uploadFile, setUploadFile] = useState(null);
 
   useEffect(() => initializeCatalog(), []);
+
+  useEffect(() => {
+    repoFileRef.current = repoFile;
+  }, [repoFile]);
 
   useEffect(() => {
     if (alanAccess !== "closed") return undefined;

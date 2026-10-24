@@ -9,6 +9,8 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@monaco-editor/react": "^4.7.0",
+    "monaco-editor": "^0.56.0",
     "next": "16.3.6",
     "peerjs": "^1.5.5",
     "react": "19.2.8",
@@ -19,5 +21,8 @@
     "eslint": "^9",
     "eslint-config-next": "16.3.6",
     "tailwindcss": "^4"
+  },
+  "overrides": {
+    "dompurify": "^3.4.17"
   }
 }

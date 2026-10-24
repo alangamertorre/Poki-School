@@ -1001,8 +1001,10 @@ main,
   background: #010302;
   border: 1px solid #1d4a1b;
   border-radius: 3px;
+  height: min(58vh, 620px);
   min-height: min(58vh, 620px);
   overflow: hidden;
+  resize: vertical;
   width: 100%;
 }
 
