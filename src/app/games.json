@@ -65,6 +65,14 @@
             "alert": "SOLO FUNCIONA CON PANTALLAS TACTILES, USA EL DEDO PARA JUGAR!"
         },
         {
+            "name": "Mortal Kombat",
+            "category": "Arcade",
+            "img": "mortal-kombat.jpg",
+            "path": "https://sites.google.com/site/thegamecompilation/mortal-kombat-4",
+            "visibility": "visible",
+            "alert": "USA 'z' y 'x' PARA ATACAR, USA LAS FLECHAS PARA MOVERTE!"
+        },
+        {
             "name": "GTA New York",
             "category": "Conducción",
             "img": "gta-ny.jpg",
