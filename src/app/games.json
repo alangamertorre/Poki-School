@@ -183,6 +183,14 @@
             "path": "https://retrario.com/",
             "visibility": "visible",
             "alert": ""
+        },
+        {
+            "name": "Classroom 6x",
+            "category": "Hubs",
+            "img": "classroom6x.jpg",
+            "path": "https://sites.google.com/view/classroom6x/",
+            "visibility": "visible",
+            "alert": ""
         }
     ]
 }
