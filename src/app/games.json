@@ -53,7 +53,7 @@
             "category": "Plataformas",
             "img": "mario.jpg",
             "path": "",
-            "visibility": "visible",
+            "visibility": "hidden",
             "alert": ""
         },
         {
@@ -100,7 +100,7 @@
             "name": "Spiderman",
             "category": "Habilidad",
             "img": "spiderman.webp",
-            "path": "https://html-classic.itch.zone/html/19388060/index.html?v=1790297297",
+            "path": "https://v1shay.itch.io/spiderman",
             "visibility": "visible",
             "alert": ""
         },
@@ -109,7 +109,7 @@
             "category": "Habilidad",
             "img": "stickmano.avif",
             "path": "",
-            "visibility": "visible",
+            "visibility": "hidden",
             "alert": ""
         },
         {
@@ -141,7 +141,7 @@
             "category": "Habilidad",
             "img": "pvz.webp",
             "path": "",
-            "visibility": "visible",
+            "visibility": "hidden",
             "alert": ""
         },
         {
