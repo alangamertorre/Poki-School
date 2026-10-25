@@ -1,0 +1,39 @@
+{
+    "headers": [
+        {
+            "source": "/(.*)",
+            "headers": [
+                {
+                    "key": "Access-Control-Allow-Origin",
+                    "value": "*"
+                }
+            ]
+        },
+        {
+            "source": "/public/games/veck/Build/(.*).wasm",
+            "headers": [
+                {
+                    "key": "Content-Type",
+                    "value": "application/wasm"
+                },
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=31536000, immutable"
+                }
+            ]
+        },
+        {
+            "source": "/public/games/veck/Build/(.*).data",
+            "headers": [
+                {
+                    "key": "Content-Type",
+                    "value": "application/octet-stream"
+                },
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=31536000, immutable"
+                }
+            ]
+        }
+    ]
+}
