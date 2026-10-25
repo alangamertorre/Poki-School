@@ -376,6 +376,7 @@ export default function Home() {
               <span className="hero-art__crosshair" aria-hidden="true">
                 +
               </span>
+              <span className="hero-art__cursor-border" aria-hidden="true" />
             </div>
             <span className="art-index">
               N° 001 — {String(visibleGames.length).padStart(3, "0")}

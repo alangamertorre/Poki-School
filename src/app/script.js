@@ -77,62 +77,97 @@ export function backgroundCursor(container) {
   if (!(container instanceof HTMLElement)) return () => {};
 
   const originalBackgroundImage = container.style.backgroundImage;
-  let activeTarget = null;
+  const targetSelector =
+    ".game-card, .category-button, .search-box, .hero-art__frame";
+  const activeTargets = new Set();
+  const proximityRadius = 150;
+  let pointerX = 0;
+  let pointerY = 0;
+  let pointerIsInside = false;
+  let animationFrame = null;
 
-  function clearActiveTarget() {
-    activeTarget?.classList.remove("cursor-border-active");
-    activeTarget = null;
+  function clearActiveTargets() {
+    activeTargets.forEach((target) => {
+      target.classList.remove("cursor-border-active");
+      target.style.removeProperty("--border-x");
+      target.style.removeProperty("--border-y");
+    });
+    activeTargets.clear();
   }
 
-  function handleMouseMove(event) {
-    const bounds = container.getBoundingClientRect();
-    const cursorX = event.clientX - bounds.left;
-    const cursorY = event.clientY - bounds.top;
+  function updateCursorEffect() {
+    animationFrame = null;
+    if (!pointerIsInside) return;
 
-    container.style.backgroundImage = `radial-gradient(circle 180px at ${cursorX}px ${cursorY}px, rgb(180 255 57 / 10%), transparent 80%)`;
+    const containerBounds = container.getBoundingClientRect();
+    const cursorX = pointerX - containerBounds.left;
+    const cursorY = pointerY - containerBounds.top;
+    container.style.backgroundImage = `radial-gradient(circle 180px at ${cursorX}px ${cursorY}px, #b3ff3954, transparent 50%)`;
 
-    if (!(event.target instanceof Element)) {
-      clearActiveTarget();
-      return;
+    const nearbyTargets = new Set();
+    container.querySelectorAll(targetSelector).forEach((target) => {
+      const bounds = target.getBoundingClientRect();
+      const targetX = Math.max(bounds.left, Math.min(pointerX, bounds.right));
+      const targetY = Math.max(bounds.top, Math.min(pointerY, bounds.bottom));
+      const distance = Math.hypot(pointerX - targetX, pointerY - targetY);
+
+      if (distance > proximityRadius) return;
+
+      nearbyTargets.add(target);
+      target.classList.add("cursor-border-active");
+      target.style.setProperty("--border-x", `${pointerX - bounds.left}px`);
+      target.style.setProperty("--border-y", `${pointerY - bounds.top}px`);
+    });
+
+    activeTargets.forEach((target) => {
+      if (!nearbyTargets.has(target)) {
+        target.classList.remove("cursor-border-active");
+        target.style.removeProperty("--border-x");
+        target.style.removeProperty("--border-y");
+      }
+    });
+
+    activeTargets.clear();
+    nearbyTargets.forEach((target) => activeTargets.add(target));
+  }
+
+  function scheduleCursorEffect() {
+    if (animationFrame === null) {
+      animationFrame = window.requestAnimationFrame(updateCursorEffect);
     }
+  }
 
-    const target = event.target.closest(
-      ".game-card, .category-button, .search-box",
+  function handlePointerMove(event) {
+    pointerX = event.clientX;
+    pointerY = event.clientY;
+    pointerIsInside = container.contains(
+      document.elementFromPoint(pointerX, pointerY),
     );
-    if (!target || !container.contains(target)) {
-      clearActiveTarget();
-      return;
-    }
+    scheduleCursorEffect();
+  }
 
-    if (activeTarget !== target) {
-      clearActiveTarget();
-      activeTarget = target;
-      activeTarget.classList.add("cursor-border-active");
-    }
-
-    const targetBounds = target.getBoundingClientRect();
-    target.style.setProperty(
-      "--border-x",
-      `${event.clientX - targetBounds.left}px`,
-    );
-    target.style.setProperty(
-      "--border-y",
-      `${event.clientY - targetBounds.top}px`,
-    );
+  function handleScroll() {
+    scheduleCursorEffect();
   }
 
   function handlePointerLeave() {
-    clearActiveTarget();
+    pointerIsInside = false;
+    if (animationFrame !== null) {
+      window.cancelAnimationFrame(animationFrame);
+      animationFrame = null;
+    }
+    clearActiveTargets();
     container.style.backgroundImage = originalBackgroundImage;
   }
 
-  container.addEventListener("pointermove", handleMouseMove);
-  container.addEventListener("pointerleave", handlePointerLeave);
+  window.addEventListener("pointermove", handlePointerMove);
+  window.addEventListener("scroll", handleScroll, true);
+  window.addEventListener("resize", handleScroll);
 
   return () => {
-    container.removeEventListener("pointermove", handleMouseMove);
-    container.removeEventListener("pointerleave", handlePointerLeave);
-    clearActiveTarget();
-    container.style.backgroundImage = originalBackgroundImage;
+    window.removeEventListener("pointermove", handlePointerMove);
+    window.removeEventListener("scroll", handleScroll, true);
+    window.removeEventListener("resize", handleScroll);
+    handlePointerLeave();
   };
 }

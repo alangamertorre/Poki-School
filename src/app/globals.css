@@ -39,7 +39,7 @@
 html {
   background: var(--background);
   scroll-behavior: smooth;
-  scrollbar-color: #45514d var(--background);
+  scrollbar-color: rgb(180 255 57 / 28%) rgb(8 11 12 / 18%);
   scrollbar-width: thin;
 }
 
@@ -82,22 +82,27 @@ a {
 }
 
 ::-webkit-scrollbar {
-  height: 8px;
-  width: 8px;
+  height: 10px;
+  width: 10px;
+  background: #080b0c38;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--background);
-}
-
-::-webkit-scrollbar-thumb {
-  background: #45514d;
-  border: 2px solid var(--background);
+  background: rgb(8 11 12 / 18%);
   border-radius: 10px;
 }
 
+::-webkit-scrollbar-thumb {
+  background: rgb(180 255 57 / 28%);
+  background-clip: content-box;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  transition: background-color .2s ease;
+}
+
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--green-dim);
+  background: rgb(180 255 57 / 55%);
+  background-clip: content-box;
 }
 
 .site-shell {
@@ -220,12 +225,10 @@ main,
 .search-box::after,
 .category-button::after,
 .game-card::after {
-  background: radial-gradient(
-    130px circle at var(--border-x, -100px) var(--border-y, -100px),
-    rgb(180 255 57 / 95%),
-    rgb(180 255 57 / 35%) 35%,
-    transparent 75%
-  );
+  background: radial-gradient(130px circle at var(--border-x, -100px) var(--border-y, -100px),
+      rgb(180 255 57 / 95%),
+      rgb(180 255 57 / 35%) 35%,
+      transparent 75%);
   content: "";
   inset: 0;
   opacity: 0;
@@ -233,6 +236,9 @@ main,
   position: absolute;
   transition: opacity .18s ease;
   -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -435,34 +441,35 @@ main,
 .hero-art__frame {
   aspect-ratio: 1.05;
   background: #101819;
-  border: 1px solid #405046;
+  border: 1px solid transparent;
   border-radius: var(--radius-xl);
   overflow: hidden;
   position: relative;
+  transition: border-color .18s ease, box-shadow .18s ease;
 }
 
-.hero-art__frame::before,
-.hero-art__frame::after {
-  border-color: var(--green);
-  content: "";
-  height: 22px;
+.hero-art__cursor-border {
+  background: radial-gradient(130px circle at var(--border-x, -100px) var(--border-y, -100px),
+      rgb(180 255 57 / 95%),
+      rgb(180 255 57 / 35%) 35%,
+      transparent 75%);
+  border-radius: inherit;
+  inset: 0;
+  opacity: 0;
+  padding: 1px;
+  pointer-events: none;
   position: absolute;
-  width: 22px;
-  z-index: 3;
+  transition: opacity .18s ease;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: 4;
 }
 
-.hero-art__frame::before {
-  border-left: 1px solid;
-  border-top: 1px solid;
-  left: -1px;
-  top: -1px;
-}
-
-.hero-art__frame::after {
-  border-bottom: 1px solid;
-  border-right: 1px solid;
-  bottom: -1px;
-  right: -1px;
+.hero-art__frame.cursor-border-active .hero-art__cursor-border {
+  opacity: 1;
 }
 
 .hero-art__image {
@@ -610,7 +617,7 @@ main,
 
 .category-button {
   background: transparent;
-  border: 1px solid transparent;
+  border: 1px solid var(--line);
   border-radius: 999px;
   color: #9ca8a4;
   cursor: pointer;
@@ -619,7 +626,11 @@ main,
   isolation: isolate;
   padding: 10px 12px;
   position: relative;
-  transition: background .2s ease, border-color .2s ease, color .2s ease;
+  transition:
+    background .2s ease,
+    border-color .2s ease,
+    box-shadow .14s ease,
+    color .2s ease;
 }
 
 .category-button:hover,
@@ -669,7 +680,11 @@ main,
   isolation: isolate;
   position: relative;
   text-decoration: none;
-  transition: border-color .25s ease, background .25s ease, transform .25s ease;
+  transition:
+    border-color .25s ease,
+    background .25s ease,
+    box-shadow .14s ease,
+    transform .25s ease;
 }
 
 .game-card:hover {
@@ -732,6 +747,7 @@ main,
   position: absolute;
   right: 10px;
   border-radius: var(--radius-sm);
+  box-shadow: -5px 3px 20px 3px var(--line);
   transform: translateY(4px);
   transition: opacity .2s ease, transform .2s ease;
   width: 29px;
