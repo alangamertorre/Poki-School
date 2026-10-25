@@ -92,7 +92,7 @@
             "name": "Brawl Stars",
             "category": "Acción",
             "img": "brawl.webp",
-            "path": "https://sites.google.com/view/poki-school-cdn/juegos/brawl-stars",
+            "path": "brawl",
             "visibility": "visible",
             "alert": ""
         },
@@ -156,7 +156,7 @@
             "name": "Veck.io",
             "category": "Acción",
             "img": "veck.webp",
-            "path": "https://sites.google.com/view/galaxy-games-portal/veck-io",
+            "path": "veck",
             "visibility": "visible",
             "alert": ""
         },
