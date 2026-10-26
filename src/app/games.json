@@ -6,7 +6,8 @@
             "img": "minecraft.webp",
             "path": "minecraft",
             "visibility": "visible",
-            "alert": ""
+            "alert": "",
+            "specialPath": ""
         },
         {
             "name": "Steal a Brainrot",
@@ -14,7 +15,8 @@
             "img": "brainrot.jpg",
             "path": "brainrot",
             "visibility": "visible",
-            "alert": ""
+            "alert": "",
+            "specialPath": "/embed/rob-brainrot-2.html"
         },
         {
             "name": "Subway Surfers",
@@ -22,7 +24,8 @@
             "img": "surfers.jpeg",
             "path": "https://subwaysurfersonline.es/wp-content/uploads/games/html5/S/subway-surfers-san-francisco-main/index.html",
             "visibility": "visible",
-            "alert": ""
+            "alert": "",
+            "specialPath": ""
         },
         {
             "name": "Geometry Dash",
@@ -30,7 +33,8 @@
             "img": "geometry.png",
             "path": "geometry",
             "visibility": "visible",
-            "alert": ""
+            "alert": "",
+            "specialPath": ""
         },
         {
             "name": "Granny",
@@ -38,7 +42,8 @@
             "img": "granny.webp",
             "path": "granny",
             "visibility": "visible",
-            "alert": ""
+            "alert": "",
+            "specialPath": ""
         },
         {
             "name": "Among Us",
@@ -46,7 +51,8 @@
             "img": "amongus.webp",
             "path": "https://stgames.top/unity/amongus/",
             "visibility": "visible",
-            "alert": ""
+            "alert": "",
+            "specialPath": ""
         },
         {
             "name": "Super Mario Bros.",
@@ -54,7 +60,8 @@
             "img": "mario.jpg",
             "path": "",
             "visibility": "hidden",
-            "alert": ""
+            "alert": "",
+            "specialPath": ""
         },
         {
             "name": "Tomb Raider, Ps2",
@@ -62,7 +69,8 @@
             "img": "tomb-raider.jpg",
             "path": "https://xproger.github.io/OpenLara/",
             "visibility": "visible",
-            "alert": "SOLO FUNCIONA CON PANTALLAS TACTILES, USA EL DEDO PARA JUGAR!"
+            "alert": "SOLO FUNCIONA CON PANTALLAS TACTILES, USA EL DEDO PARA JUGAR!",
+            "specialPath": ""
         },
         {
             "name": "Mortal Kombat",
@@ -70,7 +78,8 @@
             "img": "mortal-kombat.jpg",
             "path": "https://sites.google.com/view/poki-school-cdn/juegos/mortal-kombat",
             "visibility": "visible",
-            "alert": "USA 'z' y 'x' PARA ATACAR, USA LAS FLECHAS PARA MOVERTE!"
+            "alert": "USA 'z' y 'x' PARA ATACAR, USA LAS FLECHAS PARA MOVERTE!",
+            "specialPath": ""
         },
         {
             "name": "GTA New York",
@@ -78,7 +87,8 @@
             "img": "gta-ny.jpg",
             "path": "https://html5.gamemonetize.co/zt4qt847w9o5z06a4ayj5kwy2p9eyifi/",
             "visibility": "visible",
-            "alert": ""
+            "alert": "",
+            "specialPath": ""
         },
         {
             "name": "The Simpsons: Hit & Run",
@@ -86,7 +96,8 @@
             "img": "simpson.png",
             "path": "https://vheissu.github.io/hit-and-run-web/",
             "visibility": "visible",
-            "alert": ""
+            "alert": "",
+            "specialPath": ""
         },
         {
             "name": "Brawl Stars",
@@ -94,7 +105,8 @@
             "img": "brawl.webp",
             "path": "brawl",
             "visibility": "visible",
-            "alert": ""
+            "alert": "",
+            "specialPath": ""
         },
         {
             "name": "Brawl Guys",
@@ -102,7 +114,8 @@
             "img": "brawl.webp",
             "path": "https://sites.google.com/site/populardoodlegames/brawl-guys",
             "visibility": "visible",
-            "alert": ""
+            "alert": "",
+            "specialPath": ""
         },
         {
             "name": "Spiderman",
@@ -110,7 +123,8 @@
             "img": "spiderman.webp",
             "path": "https://v1shay.itch.io/spiderman",
             "visibility": "visible",
-            "alert": ""
+            "alert": "",
+            "specialPath": ""
         },
         {
             "name": "Stickman Hook",
@@ -118,7 +132,8 @@
             "img": "stickmano.avif",
             "path": "",
             "visibility": "hidden",
-            "alert": ""
+            "alert": "",
+            "specialPath": ""
         },
         {
             "name": "Level Devil",
@@ -126,7 +141,8 @@
             "img": "level-devil.png",
             "path": "https://10minutestilldawnonline.github.io/a77/level-devil/",
             "visibility": "visible",
-            "alert": ""
+            "alert": "",
+            "specialPath": ""
         },
         {
             "name": "Drive Mad",
@@ -134,7 +150,8 @@
             "img": "drive-mad.webp",
             "path": "https://godzilla214.github.io/drive-mad-main/",
             "visibility": "visible",
-            "alert": ""
+            "alert": "",
+            "specialPath": ""
         },
         {
             "name": "Drive Taxi",
@@ -142,7 +159,8 @@
             "img": "drive-taxi.jpg",
             "path": "https://script.google.com/macros/s/AKfycbz6ujpzyiDCoovo7YOFvSig9IwfP8MzvwSGYG_fBzkAXY1b3TJ-b58OwAGT9XyyRhdF/exec",
             "visibility": "visible",
-            "alert": ""
+            "alert": "",
+            "specialPath": ""
         },
         {
             "name": "Plantas Vs Zombis",
@@ -150,7 +168,8 @@
             "img": "pvz.webp",
             "path": "",
             "visibility": "hidden",
-            "alert": ""
+            "alert": "",
+            "specialPath": ""
         },
         {
             "name": "Veck.io",
@@ -158,7 +177,8 @@
             "img": "veck.webp",
             "path": "veck",
             "visibility": "visible",
-            "alert": ""
+            "alert": "",
+            "specialPath": ""
         },
         {
             "name": "Fortzone Battle Royale",
@@ -166,7 +186,8 @@
             "img": "fornite.jpg",
             "path": "https://sites.google.com/view/galaxy-games-portal/fortnite-io",
             "visibility": "visible",
-            "alert": ""
+            "alert": "",
+            "specialPath": ""
         },
         {
             "name": "Google Snake",
@@ -174,7 +195,8 @@
             "img": "snake.webp",
             "path": "https://masonsunblockedgames.github.io/MasonsUnblockedGames/googsnake/inframe.html",
             "visibility": "visible",
-            "alert": ""
+            "alert": "",
+            "specialPath": ""
         },
         {
             "name": "Classic Games: Retario",
@@ -182,7 +204,8 @@
             "img": "retario.svg",
             "path": "https://retrario.com/",
             "visibility": "visible",
-            "alert": ""
+            "alert": "",
+            "specialPath": ""
         },
         {
             "name": "Classroom 6x",
@@ -190,7 +213,8 @@
             "img": "classroom6x.jpg",
             "path": "https://sites.google.com/view/classroom6x/",
             "visibility": "visible",
-            "alert": ""
+            "alert": "",
+            "specialPath": ""
         }
     ]
 }

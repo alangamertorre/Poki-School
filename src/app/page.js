@@ -46,11 +46,19 @@ function configureMonaco(monaco) {
   });
 }
 
-function gameHref(path) {
+function gameHref(path, specialPath /*specialPath includes the html path*/) {
   if (!path) return "#";
-  return path.startsWith("http") || path.startsWith("blob")
-    ? path
-    : `/games/${path}/index.html`;
+  if (!specialPath) {
+    return path.startsWith("http") || path.startsWith("blob")
+      ? path
+      : `/games/${path}/index.html`;
+  } else {
+    if (!specialPath.endsWith(".html"))
+      return "Error 400, db is corrupted to this game.";
+    return path.startsWith("http") || path.startsWith("blob")
+      ? path
+      : `/games/${path}/${specialPath}`;
+  }
 }
 
 export default function Home() {
@@ -428,14 +436,22 @@ export default function Home() {
                 className="game-card"
                 data-category={game.category}
                 data-name={game.name}
-                href={gameHref(game.path)}
+                href={
+                  !game.specialPath
+                    ? gameHref(game.path)
+                    : gameHref(game.path, game.specialPath)
+                }
                 key={game.name}
                 onClick={(event) => {
                   if (!game.alert) return;
 
                   event.preventDefault();
                   if (alertGame(game.alert)) {
-                    window.location.assign(gameHref(game.path));
+                    window.location.assign(
+                      !game.specialPath
+                        ? gameHref(game.path)
+                        : gameHref(game.path, game.specialPath),
+                    );
                   }
                 }}
                 style={{ "--card-index": index }}
