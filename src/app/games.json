@@ -46,6 +46,14 @@
             "specialPath": ""
         },
         {
+          "name": "FNAF 1",
+          "category": "Terror",
+          "img": "",
+          "path": "https://play.1gdata.com/ursfa9sn/index.html",
+          "visibility": "visible",
+          "alert": "", "specialPath": ""
+        },
+        {
             "name": "Among Us",
             "category": "Multijugador",
             "img": "amongus.webp",
